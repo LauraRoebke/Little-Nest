@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Little Nest – Angebote &amp; Sale %</title>
+  <style>
+    :root { --sand:#F4EDE3; --linen:#EDE3D7; --clay:#B87050; --bark:#5C3D2A; --ink:#1E1A17; --white:#FDFAF6; --display:'Cormorant Garamond',serif; --body:'DM Sans',sans-serif; }
+    body { font-family: var(--body); background: var(--white); color: var(--ink); margin:0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+    .navbar { background: var(--white); border-bottom: 1px solid var(--linen); padding: 20px 0; }
+    .navbar .container { display:flex; justify-content:space-between; padding:0 24px; }
+    .logo { font-family: var(--display); font-size: 1.5rem; color: var(--bark); text-decoration:none; font-weight:600;}
+    .nav-links { display:flex; list-style:none; gap:32px; margin:0;}
+    .nav-links a { text-decoration:none; color:var(--ink); font-size:14px; opacity:0.8;}
+    
+    .sale-banner { background: #d9534f; color: white; padding: 40px; text-align:center; border-radius: 16px; margin-bottom: 40px; }
+    .sale-banner h1 { font-family: var(--display); font-size: 3rem; margin:0 0 10px 0; }
+    
+    .shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+    .product-card { background: white; border-radius: 12px; overflow:hidden; position:relative; border: 1px solid #ffcccc;}
+    .product-card img { width:100%; aspect-ratio:1/1; object-fit:cover; }
+    .badge { position:absolute; top:12px; left:12px; background:#d9534f; color:white; font-size:11px; padding:4px 10px; border-radius:20px;}
+    .p-body { padding: 20px; }
+    .p-name { font-family: var(--display); font-size: 1.2rem; color: var(--bark); }
+    .p-price { color: #d9534f; font-weight: 600; font-size: 1.3rem; margin-top:8px;}
+    .old-price { text-decoration: line-through; color: gray; font-size: 14px; margin-left: 8px; font-weight: normal;}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">🌿 Little Nest</a>
+    <ul class="nav-links">
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?cat=deko">Deko</a></li>
+      <li><a href="shop.html?cat=textilien">Textilien</a></li>
+      <li><a href="shop.html?cat=moebel">Möbel</a></li>
+      <li><a href="inspiration.html">Inspiration</a></li>
+      <li><a href="sale.html"><b><span style="color:#d9534f;">Sale %</span></b></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="sale-banner">
+    <h1>Hier sparst du Platz &amp; Geld</h1>
+    <p>Nur für kurze Zeit: Auslaufmodelle und saisonale Highlights radikal reduziert.</p>
+  </div>
+
+  <div class="shop-grid" id="sale-grid"></div>
+</div>
+
+<script>
+// Filtert direkt alle Artikel heraus, die "Sale" deklariert haben
+const products = [
+  { id:4, name:'Keramik-Schale Tokyo', category:'deko', price:19.50, priceOld:29.00, badge:'Sale', img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500' },
+  { id:7, name:'Tischläufer Rustika', category:'textilien', price:12.90, priceOld:19.90, badge:'Sale', img:'https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=500' },
+  { id:10, name:'Beistelltisch Loft', category:'moebel', price:45.00, priceOld:69.00, badge:'Sale', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500' }
+];
+
+const grid = document.getElementById('sale-grid');
+grid.innerHTML = products.map(p => `
+  <div class="product-card">
+    <span class="badge">SALE</span>
+    <img src="${p.img}" alt="${p.name}">
+    <div class="p-body">
+      <div class="p-name">${p.name}</div>
+      <div class="p-price">€ ${p.price.toFixed(2)} <span class="old-price">€ ${p.priceOld.toFixed(2)}</span></div>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
