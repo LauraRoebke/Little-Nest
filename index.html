@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Little Nest – Wohnen mit Gefühl</title>
@@ -37,6 +35,7 @@
     .nav-links{display:flex;list-style:none;gap:32px;}
     .nav-links a{font-size:14px;color:var(--ink);opacity:.75;transition:opacity var(--transition);}
     .nav-links a:hover{opacity:1;}
+    .nav-links a.sale-link {color: var(--clay); font-weight: 600; opacity: 1;}
     .nav-right{display:flex;align-items:center;gap:16px;}
     .cart-link{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--bark);background:var(--linen);padding:7px 16px;border-radius:40px;transition:background var(--transition);cursor:pointer;}
     .cart-link:hover{background:#e0d3c4;}
@@ -55,6 +54,7 @@
     .mobile-nav.open{display:flex;}
     .mobile-nav a{font-family:var(--display);font-size:1.6rem;color:var(--bark);opacity:.8;}
     .mobile-nav a:hover{opacity:1;}
+    .mobile-nav a.sale-link {color: var(--clay); opacity: 1;}
 
     /* ── SEARCH BAR ── */
     .search-bar-wrap{background:var(--sand);border-bottom:1px solid var(--linen);padding:10px 0;}
@@ -80,6 +80,8 @@
     .btn-primary:hover{background:var(--bark);transform:translateY(-1px);}
     .btn-ghost{background:transparent;color:var(--bark);padding:14px 32px;border:1.5px solid var(--bark);border-radius:40px;font-family:var(--body);font-size:14px;font-weight:500;cursor:pointer;transition:background var(--transition),color var(--transition);}
     .btn-ghost:hover{background:var(--bark);color:white;}
+    .btn-sale{background: #d9534f; color: white; border: none;}
+    .btn-sale:hover{background: #c9302c;}
 
     .hero-visual{height:100%;min-height:88vh;position:relative;overflow:hidden;}
     .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;}
@@ -117,14 +119,16 @@
     .filter-row{display:flex;gap:10px;flex-wrap:wrap;}
     .filter-btn{background:transparent;border:1.5px solid var(--bark);border-radius:40px;padding:8px 20px;font-family:var(--body);font-size:13px;color:var(--bark);cursor:pointer;transition:all var(--transition);}
     .filter-btn:hover,.filter-btn.active{background:var(--bark);color:white;}
+    .filter-btn.sale-active {background: #d9534f; border-color: #d9534f; color: white;}
     #products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
 
     .product-card{background:var(--white);border-radius:20px;overflow:hidden;transition:transform var(--transition),box-shadow var(--transition);position:relative;}
     .product-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(92,61,42,.13);}
-    .product-image{aspect-ratio:4/3;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;cursor:pointer;}
+    .product-image childhood{aspect-ratio:4/3;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;cursor:pointer;}
     .product-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
     .product-card:hover .product-image img{transform:scale(1.06);}
     .product-badge{position:absolute;top:12px;left:12px;background:var(--clay);color:white;font-size:11px;font-weight:500;padding:5px 12px;border-radius:40px;z-index:2;}
+    .product-badge.sale-badge {background: #d9534f;}
 
     /* Favoriten-Herz */
     .fav-btn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .2s ease,box-shadow .2s ease;}
@@ -306,10 +310,11 @@
         Little Nest
       </a>
       <ul class="nav-links">
-        <li><a href="#products">Shop</a></li>
+        <li><a href="#products" onclick="filterProducts('alle', document.querySelector('.filter-btn'))">Shop</a></li>
         <li><a href="#categories">Kategorien</a></li>
         <li><a href="#inspiration">Inspiration</a></li>
         <li><a href="#">Über uns</a></li>
+        <li><a href="#products" class="sale-link" onclick="filterProducts('sale', this)">Sale %</a></li>
       </ul>
       <div class="nav-right">
         <a class="cart-link nav-icon" onclick="openCart(event)">🛒 <span id="cart-count">0</span></a>
@@ -322,10 +327,11 @@
 
   <!-- Mobile Nav Drawer -->
   <div class="mobile-nav" id="mobile-nav">
-    <a href="#products" onclick="closeMobileNav()">Shop</a>
+    <a href="#products" onclick="closeMobileNav(); filterProducts('alle', document.querySelector('.filter-btn'))">Shop</a>
     <a href="#categories" onclick="closeMobileNav()">Kategorien</a>
     <a href="#inspiration" onclick="closeMobileNav()">Inspiration</a>
     <a href="#" onclick="closeMobileNav()">Über uns</a>
+    <a href="#products" class="sale-link" onclick="closeMobileNav(); filterProducts('sale', null)">Sale %</a>
   </div>
 
   <!-- Suchbalken -->
@@ -350,7 +356,7 @@
     <p class="hero-sub">Liebevoll ausgewählte Homeartikel, Deko, Textilien und kleine Möbel – alles, was ein Zuhause zu einem Ort macht, an dem man wirklich ankommen kann.</p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Jetzt entdecken</button>
-      <button class="btn-ghost" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Kategorien</button>
+      <button class="btn-ghost btn-sale" onclick="filterProducts('sale', null); document.getElementById('products').scrollIntoView({behavior:'smooth'})">% Sale %</button>
     </div>
   </div>
   <div class="hero-visual">
@@ -406,6 +412,7 @@
         <button class="filter-btn" onclick="filterProducts('deko',this)">Dekoartikel</button>
         <button class="filter-btn" onclick="filterProducts('textilien',this)">Textilien</button>
         <button class="filter-btn" onclick="filterProducts('moebel',this)">Möbel</button>
+        <button class="filter-btn" style="color:#d9534f; border-color:#d9534f;" onclick="filterProducts('sale',this)">Sale %</button>
       </div>
     </div>
     <div id="products-grid"></div>
@@ -560,7 +567,7 @@ const fallbackProducts = [
   { id:1, name:'Terrakotta-Vase',      category:'deko',      price:24.90, emoji:'🏺', badge:'Neu',        desc:'Handgeformt aus natürlichem Ton. Verleiht jedem Raum Wärme und einen erdigen Charakter.',
     img:'https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=600&q=80&fit=crop',
     sizes:['Klein','Mittel','Groß'] },
-  { id:2, name:'Leinenkissen',          category:'textilien', price:18.90, emoji:'🛋️', badge:'',           desc:'Weiches Leinen in Naturfarben, 45×45 cm. Inkl. Inlett.',
+  { id:2, name:'Leinenkissen',          category:'textilien', price:12.50, emoji:'🛋️', badge:'Sale',       desc:'Weiches Leinen in Naturfarben, 45×45 cm. Inkl. Inlett.',
     img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=600&q=80&fit=crop',
     sizes:['45×45','50×50','60×60'] },
   { id:3, name:'Bücherregal Eiche',     category:'moebel',   price:89.00, emoji:'📚', badge:'Bestseller',  desc:'Massivholz Eiche, 3 offene Böden. B 80 × H 120 × T 25 cm.',
@@ -572,7 +579,7 @@ const fallbackProducts = [
   { id:5, name:'Kuscheldecke Wolle',    category:'textilien', price:39.90, emoji:'🧣', badge:'Neu',        desc:'Extra weiche Wollmischung, 130×170 cm. Pflegeleicht, maschinenwaschbar.',
     img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80&fit=crop',
     sizes:['130×170','150×200'] },
-  { id:6, name:'Beistelltisch rund',    category:'moebel',   price:59.00, emoji:'🪑', badge:'',           desc:'Gestell aus Stahl, Platte aus Bambus. Ø 45 cm, H 55 cm. Leicht & stabil.',
+  { id:6, name:'Beistelltisch rund',    category:'moebel',   price:45.00, emoji:'🪑', badge:'Sale',       desc:'Gestell aus Stahl, Platte aus Bambus. Ø 45 cm, H 55 cm. Leicht & stabil.',
     img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop',
     sizes:['Ø 40 cm','Ø 45 cm','Ø 55 cm'] },
   { id:7, name:'Wandspiegel oval',      category:'deko',      price:49.90, emoji:'🪞', badge:'',           desc:'Goldener Metallrahmen, 60×80 cm. Ideal für Flur, Schlafzimmer oder Wohnzimmer.',
@@ -644,7 +651,16 @@ function closeMobileNav() {
 ════════════════════════════════════════════ */
 function renderProducts(filter, search) {
   const grid = document.getElementById('products-grid');
-  let list = filter === 'alle' ? [...getProducts()] : getProducts().filter(p => p.category === filter);
+  let list = [];
+  
+  if (filter === 'alle') {
+    list = [...getProducts()];
+  } else if (filter === 'sale') {
+    list = getProducts().filter(p => p.badge && p.badge.toLowerCase() === 'sale');
+  } else {
+    list = getProducts().filter(p => p.category === filter);
+  }
+
   if (search && search.trim()) {
     const q = search.toLowerCase();
     list = list.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
@@ -655,11 +671,12 @@ function renderProducts(filter, search) {
   }
   grid.innerHTML = list.map(p => {
     const isFav = favorites.includes(p.id);
+    const isSale = p.badge && p.badge.toLowerCase() === 'sale';
     return `
     <article class="product-card">
       <div class="product-image" onclick="openDetail(${p.id})">
         ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy"/>` : `<span>${p.emoji}</span>`}
-        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+        ${p.badge ? `<span class="product-badge ${isSale ? 'sale-badge':''}">${p.badge}</span>` : ''}
         <button class="fav-btn ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${p.id},this)" title="Zur Wunschliste">
           ${isFav ? '❤️' : '🤍'}
         </button>
@@ -669,8 +686,8 @@ function renderProducts(filter, search) {
         <h3 class="product-name" onclick="openDetail(${p.id})">${p.name}</h3>
         <p class="product-desc">${p.desc.slice(0,60)}…</p>
         <div class="product-footer">
-          <span class="product-price">€ ${p.price.toFixed(2).replace('.',',')}</span>
-          <button class="add-to-cart" onclick="quickAddToCart(${p.id})">+ Warenkorb</button>
+          <span class="product-price" style="${isSale ? 'color:#d9534f;' : ''}">€ ${p.price.toFixed(2).replace('.',',')}</span>
+          <button class="add-to-cart" style="${isSale ? 'background:#d9534f;' : ''}" onclick="quickAddToCart(${p.id})">+ Warenkorb</button>
         </div>
       </div>
     </article>`;
@@ -687,11 +704,32 @@ function categoryLabel(cat) {
 function filterProducts(filter, btn) {
   currentFilter = filter;
   renderProducts(filter, currentSearch);
-  if (btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  
+  // Finde den passenden Button in der Filterleiste, falls kein Button übergeben wurde
+  if (!btn) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(b => {
+      if (filter === 'alle' && b.textContent.includes('Alle')) btn = b;
+      if (filter === 'deko' && b.textContent.includes('Deko')) btn = b;
+      if (filter === 'textilien' && b.textContent.includes('Textilien')) btn = b;
+      if (filter === 'moebel' && b.textContent.includes('Möbel')) btn = b;
+      if (filter === 'sale' && b.textContent.includes('Sale')) btn = b;
+    });
   }
+
+  if (btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'sale-active'));
+    if (filter === 'sale') {
+      btn.classList.add('sale-active');
+    } else {
+      btn.classList.add('active');
+    }
+  }
+  
+  // Scrolle sanft zum Produktbereich
+  document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
+
 function handleSearch(val) {
   currentSearch = val;
   renderProducts(currentFilter, val);
