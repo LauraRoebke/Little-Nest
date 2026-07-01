@@ -4,15 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Little Nest – Wohnen mit Gefühl</title>
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-391KXM12M7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-391KXM12M7');
-  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -168,4 +159,53 @@
         <p style="opacity:0.5; margin-top:10px;">Nachhaltige und ästhetische Wohnaccessoires.</p>
       </div>
       <div class="footer-col">
-        <h5>Shop
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=deko">Dekoartikel</a></li>
+          <li><a href="shop.html?cat=textilien">Textilien</a></li>
+          <li><a href="shop.html?cat=moebel">Möbel</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Inspiration</h5>
+        <ul>
+          <li><a href="inspiration.html">Wohnwelten</a></li>
+          <li><a href="sale.html">Angebote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <ul>
+          <li>info@littlenest.de</li>
+          <li>Zentraler Support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const products = [
+  { id:1, name:'Terrakotta-Vase Mara', category:'deko', price:24.90, badge:'Neu', img:'https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=500' },
+  { id:2, name:'Duftkerze Sandelholz', category:'deko', price:14.90, badge:'Beliebt', img:'https://images.unsplash.com/photo-1603204077167-2fa0397f591b?w=500' },
+  { id:5, name:'Leinenkissen Pure Nature', category:'textilien', price:19.90, badge:'Bestseller', img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=500' },
+  { id:9, name:'Eichen-Regal Minimal', category:'moebel', price:149.00, badge:'Premium', img:'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=500' }
+];
+
+const grid = document.getElementById('products-grid');
+grid.innerHTML = products.map(p => `
+  <div class="product-card">
+    <div class="product-img-wrap">
+      <img src="${p.img}" alt="${p.name}">
+      ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+    </div>
+    <div class="product-body">
+      <h3 class="product-name">${p.name}</h3>
+      <p class="product-price">€ ${p.price.toFixed(2).replace('.', ',')}</p>
+      <button class="add-to-cart" onclick="window.location.href='shop.html'">Zum Shop</button>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
