@@ -1,0 +1,118 @@
+/* Grunddesign */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+main {
+    flex: 1;
+    padding: 80px 20px 20px; /* 80px oben verhindert, dass der Header Text verdeckt */
+}
+
+/* Fixierter Header oben */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Warenkorb-Button oben rechts */
+.cart-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    background-color: #e9e9e9;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.cart-button:hover {
+    background-color: #ddd;
+}
+
+.cart-count {
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    margin-left: 8px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Footer ganz unten */
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 30px 20px;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Widerrufs-Button im Footer */
+.widerruf-button {
+    display: inline-block;
+    background-color: #d9534f;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.widerruf-button:hover {
+    background-color: #c9302c;
+}
