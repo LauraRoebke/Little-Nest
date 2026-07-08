@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produkt-Details – Little Nest</title>
+  <style>
+    :root { 
+      --sand:#F4EDE3; --linen:#EDE3D7; --clay:#B87050; --bark:#5C3D2A; --ink:#1E1A17; --white:#FDFAF6; 
+      --display:'Cormorant Garamond',serif; --body:'DM Sans',sans-serif; 
+    }
+    body { font-family: var(--body); background: var(--white); color: var(--ink); margin:0; line-height: 1.6;}
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+    
+    /* NAVBAR & DROPDOWN */
+    .navbar { background: var(--white); border-bottom: 1px solid var(--linen); padding: 20px 0; }
+    .navbar .container { display:flex; justify-content:space-between; padding:0 24px; align-items: center; height: auto;}
+    .logo { font-family: var(--display); font-size: 1.5rem; color: var(--bark); text-decoration:none; font-weight:600;}
+    .nav-links { display:flex; list-style:none; gap:32px; margin:0; padding:0;}
+    .nav-links li{position:relative;}
+    .nav-links a { text-decoration:none; color:var(--ink); font-size:14px; opacity:0.8;}
+    .nav-links a:hover { opacity:1; }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--white);
+      border: 1px solid var(--linen);
+      border-radius: 8px;
+      list-style: none;
+      padding: 10px 0;
+      min-width: 160px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      z-index: 300;
+    }
+    .dropdown-menu li { width: 100%; }
+    .dropdown-menu li a { padding: 8px 20px; opacity: 0.8; white-space: nowrap; display: block;}
+    .nav-links li:hover .dropdown-menu { display: block; }
+
+    /* LAYOUT DETAILSEITE */
+    .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 20px; align-items: start;}
+    
+    /* Galerie */
+    .product-gallery { display: flex; flex-direction: column; gap: 16px; }
+    .main-image img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.02);}
+    .thumbnail-row { display: flex; gap: 12px; }
+    .thumbnail-row img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+    .thumbnail-row img:hover, .thumbnail-row img.active { border-color: var(--clay); }
+
+    /* Info */
+    .product-info { padding: 10px 0; }
+    .product-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--clay); font-weight: 600; margin-bottom: 12px; display: inline-block;}
+    .product-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); color: var(--bark); margin: 0 0 16px 0; font-weight: 500; line-height: 1.2;}
+    .product-price { font-size: 1.8rem; font-weight: 600; color: var(--ink); margin-bottom: 24px; }
+    .product-description { font-size: 15px; color: #555; margin-bottom: 36px; line-height: 1.7; opacity: 0.9;}
+    
+    .btn-buy { background: var(--clay); color: white; border: none; padding: 16px 48px; font-size: 15px; font-weight: 500; border-radius: 40px; cursor: pointer; transition: background 0.2s; }
+    .btn-buy:hover { background: var(--bark); }
+
+    /* FOOTER */
+    footer{background:var(--ink);color:white;padding:60px 0 30px;font-size:14px; margin-top: 80px;}
+    .footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:40px;}
+    .footer-col h5{color:var(--linen);margin-bottom:16px;text-transform:uppercase;font-size:12px;}
+    .footer-col ul{list-style:none; padding:0;}
+    .footer-col ul li{margin-bottom:8px;opacity:0.7;}
+    .footer-col ul li a:hover{opacity:1;color:var(--clay);}
+    
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(237, 227, 215, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      opacity: 0.7;
+    }
+    .footer-legal-links { display: flex; gap: 24px; list-style: none; padding:0;}
+    .footer-legal-links a:hover { color: var(--clay); }
+
+    @media (max-width: 768px) {
+      .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">🌿 Little Nest</a>
+    <ul class="nav-links">
+      <li>
+        <a href="shop.html">Shop ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="shop.html?cat=deko">Deko</a></li>
+          <li><a href="shop.html?cat=textilien">Textilien</a></li>
+          <li><a href="shop.html?cat=moebel">Möbel</a></li>
+        </ul>
+      </li>
+      <li><a href="inspiration.html">Inspiration</a></li>
+      <li><a href="sale.html" style="color:#d9534f;">Sale %</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="product-detail-grid" id="product-container">
+    </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5 style="font-family:var(--display); font-size:1.4rem; color:white;">Little Nest</h5>
+        <p style="opacity:0.5; margin-top:10px;">Nachhaltige und ästhetische Wohnaccessoires.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=deko">Dekoartikel</a></li>
+          <li><a href="shop.html?cat=textilien">Textilien</a></li>
+          <li><a href="shop.html?cat=moebel">Möbel</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Inspiration</h5>
+        <ul>
+          <li><a href="inspiration.html">Wohnwelten</a></li>
+          <li><a href="sale.html">Angebote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li>info@littlenest.de</li>
+          <li>Zentraler Support</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div>&copy; 2026 Little Nest. Alle Rechte vorbehalten.</div>
+      <ul class="footer-legal-links">
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Komplette Produktdatenbank inklusive detaillierten Beschreibungen & Galeriebildern
+const products = [
+  { id:1, name:'Terrakotta-Vase Mara', category:'Deko', price:24.90, desc:'Unsere handgefertigte Vase "Mara" besticht durch ihre raue, erdige Struktur. Jedes Stück wird traditionell von Hand geformt und ist ein absolutes Unikat. Perfekt geeignet für Trockenblumen oder als skulpturales Designobjekt auf deinem Sideboard.', img:'https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=600', images: ['https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=600', 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600', 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600'] },
+  { id:2, name:'Duftkerze Sandelholz', category:'Deko', price:14.90, desc:'Gegossen aus 100% natürlichem, veganem Sojawachs verströmt diese edle Kerze im Braunglas eine tief beruhigende Note von erdigem Sandelholz und warmem Amber. Perfekt für gemütliche Leseabende.', img:'https://images.unsplash.com/photo-1603204077167-2fa0397f591b?w=600', images: ['https://images.unsplash.com/photo-1603204077167-2fa0397f591b?w=600', 'https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=600'] },
+  { id:3, name:'Wandspiegel Aura (Oval)', category:'Deko', price:49.90, desc:'Der minimalistische Wandspiegel Aura verleiht jedem Raum optische Tiefe. Mit seinem extrem filigranen Rahmen passt er ideal in den Flur oder über eine Kommode.', img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600', images: ['https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600'] },
+  { id:4, name:'Keramik-Schale Tokyo', category:'Deko', price:19.50, desc:'Saisonales Highlight im matten Design. Inspiriert von japanischem Minimalismus eignet sich diese Schale hervorragend als Obstschale oder dezente Ablage.', img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600', images: ['https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600'] },
+  { id:5, name:'Leinenkissen Pure Nature', category:'Textilien', price:19.90, desc:'Gefertigt aus 100% zertifiziertem, europäischem Leinen. Atmungsaktiv, langlebig und sanft vorgewaschen, um diesen charmanten Knitterlook zu erzeugen. Kommt inklusive hochwertiger Füllung.', img:'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=600', images: ['https://images.unsplash.com/photo-1567016432779-094069958ea5?w=600', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600'] },
+  { id:6, name:'Woll-Kuscheldecke Cozy', category:'Textilien', price:59.90, desc:'Diese schwere Kuscheldecke besteht aus feinster Schurwolle. Sie hält im Winter wunderbar warm und setzt zeitlose, skandinavische Akzente auf jedem Sofa.', img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600', images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600'] },
+  { id:7, name:'Tischläufer Rustika', category:'Textilien', price:12.90, desc:'Rustikaler Charme für deine Tafel. Der Tischläufer aus schwerem Baumwoll-Leinen-Gemisch bringt skandinavische Gelassenheit an jeden Essenstisch.', img:'https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=600', images: ['https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=600'] },
+  { id:8, name:'Baumwoll-Teppich Alva', category:'Textilien', price:89.00, desc:'Ein handgewebter Traum für nackte Füße. Dieser Kurzflor-Teppich fügt sich farblich dezent ein und ist dank der robusten Baumwolle extrem pflegeleicht.', img:'https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600', images: ['https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600'] },
+  { id:9, name:'Eichen-Regal Minimal', category:'Möbel', price:149.00, desc:'Klarheit in Form und Vollendung. Gefertigt aus massivem, zertifiziertem Eichenholz und ökologisch geölt. Dieses Wandregal trägt deine Lieblingsbücher und Dekorationen mit purer Leichtigkeit.', img:'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=600', images: ['https://images.unsplash.com/photo-1594620302200-9a762244a156?w=600', 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600'] },
+  { id:10, name:'Beistelltisch Loft', category:'Möbel', price:45.00, desc:'Der Beistelltisch Loft kombiniert kühles Metall mit einer warmen Holzoberfläche. Die perfekte Ergänzung neben deiner Lieblings-Leseecke.', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600', images: ['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600'] },
+  { id:11, name:'Konsolentisch Nordik', category:'Möbel', price:189.00, desc:'Schlanke Formen für schmale Räume. Ideal im Eingangsbereich einsetzbar, um Schlüssel, Briefe und eine feine Vase stilvoll in Szene zu setzen.', img:'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600', images: ['https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600'] },
+  { id:12, name:'Rattan-Sessel Boho', category:'Möbel', price:220.00, desc:'Hol dir das Urlaubsgefühl ins Wohnzimmer. Dieser geflochtene Sessel versprüht pure Gemütlichkeit und lässt sich herrlich mit weichen Textilien kombinieren.', img:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600', images: ['https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600'] }
+];
+
+// ID aus der Webadresse auslesen (?id=X)
+const params = new URLSearchParams(window.location.search);
+const productId = parseInt(params.get('id'));
+
+// Passendes Produkt suchen oder Fallback auf ID 1, falls fehlerhaft
+const product = products.find(p => p.id === productId) || products[0];
+
+// HTML für die Produktseite erzeugen
+const container = document.getElementById('product-container');
+container.innerHTML = `
+  <div class="product-gallery">
+    <div class="main-image">
+      <img id="main-img-target" src="${product.img}" alt="${product.name}">
+    </div>
+    <div class="thumbnail-row">
+      ${product.images.map((imgUrl, idx) => `
+        <img src="${imgUrl}" class="${idx === 0 ? 'active' : ''}" onclick="changeImage(this, '${imgUrl}')" alt="Vorschau">
+      `).join('')}
+    </div>
+  </div>
+  <div class="product-info">
+    <span class="product-cat">${product.category}</span>
+    <h1 class="product-title">${product.name}</h1>
+    <div class="product-price">€ ${product.price.toFixed(2).replace('.', ',')}</div>
+    <p class="product-description">${product.desc}</p>
+    <button class="btn-buy" onclick="alert('${product.name} wurde erfolgreich in den Warenkorb gelegt!')">In den Warenkorb legen</button>
+  </div>
+`;
+
+// Funktion zum Wechseln der Bilder bei Klick auf Thumbnails
+function changeImage(element, src) {
+  document.getElementById('main-img-target').src = src;
+  document.querySelectorAll('.thumbnail-row img').forEach(img => img.classList.remove('active'));
+  element.classList.add('active');
+}
+</script>
+</body>
+</html>
