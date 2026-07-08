@@ -2,28 +2,76 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Little Nest – Angebote &amp; Sale %</title>
   <style>
     :root { --sand:#F4EDE3; --linen:#EDE3D7; --clay:#B87050; --bark:#5C3D2A; --ink:#1E1A17; --white:#FDFAF6; --display:'Cormorant Garamond',serif; --body:'DM Sans',sans-serif; }
     body { font-family: var(--body); background: var(--white); color: var(--ink); margin:0; }
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+    
+    /* NAVBAR & DROPDOWN */
     .navbar { background: var(--white); border-bottom: 1px solid var(--linen); padding: 20px 0; }
-    .navbar .container { display:flex; justify-content:space-between; padding:0 24px; }
+    .navbar .container { display:flex; justify-content:space-between; padding:0 24px; align-items: center;}
     .logo { font-family: var(--display); font-size: 1.5rem; color: var(--bark); text-decoration:none; font-weight:600;}
-    .nav-links { display:flex; list-style:none; gap:32px; margin:0;}
+    .nav-links { display:flex; list-style:none; gap:32px; margin:0; padding:0;}
+    .nav-links li{position:relative;}
     .nav-links a { text-decoration:none; color:var(--ink); font-size:14px; opacity:0.8;}
+    .nav-links a:hover { opacity:1; }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--white);
+      border: 1px solid var(--linen);
+      border-radius: 8px;
+      list-style: none;
+      padding: 10px 0;
+      min-width: 160px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      z-index: 300;
+    }
+    .dropdown-menu li { width: 100%; }
+    .dropdown-menu li a { padding: 8px 20px; opacity: 0.8; white-space: nowrap; display: block;}
+    .nav-links li:hover .dropdown-menu { display: block; }
     
     .sale-banner { background: #d9534f; color: white; padding: 40px; text-align:center; border-radius: 16px; margin-bottom: 40px; }
     .sale-banner h1 { font-family: var(--display); font-size: 3rem; margin:0 0 10px 0; }
     
     .shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-    .product-card { background: white; border-radius: 12px; overflow:hidden; position:relative; border: 1px solid #ffcccc;}
+    .product-card { background: white; border-radius: 12px; overflow:hidden; position:relative; border: 1px solid #ffcccc; cursor: pointer;}
     .product-card img { width:100%; aspect-ratio:1/1; object-fit:cover; }
     .badge { position:absolute; top:12px; left:12px; background:#d9534f; color:white; font-size:11px; padding:4px 10px; border-radius:20px;}
     .p-body { padding: 20px; }
     .p-name { font-family: var(--display); font-size: 1.2rem; color: var(--bark); }
     .p-price { color: #d9534f; font-weight: 600; font-size: 1.3rem; margin-top:8px;}
     .old-price { text-decoration: line-through; color: gray; font-size: 14px; margin-left: 8px; font-weight: normal;}
+    
+    /* FOOTER */
+    footer{background:var(--ink);color:white;padding:60px 0 30px;font-size:14px; margin-top: 60px;}
+    .footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:40px;}
+    .footer-col h5{color:var(--linen);margin-bottom:16px;text-transform:uppercase;font-size:12px;}
+    .footer-col ul{list-style:none; padding:0;}
+    .footer-col ul li{margin-bottom:8px;opacity:0.7;}
+    .footer-col ul li a:hover{opacity:1;color:var(--clay);}
+    
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(237, 227, 215, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      opacity: 0.7;
+    }
+    .footer-legal-links { display: flex; gap: 24px; list-style: none; padding:0;}
+    .footer-legal-links a:hover { color: var(--clay); }
+    
+    @media(max-width: 900px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 600px) { .shop-grid { grid-template-columns: 1fr; } .footer-grid{grid-template-columns:1fr;} }
   </style>
 </head>
 <body>
@@ -32,10 +80,14 @@
   <div class="container">
     <a href="index.html" class="logo">🌿 Little Nest</a>
     <ul class="nav-links">
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="shop.html?cat=deko">Deko</a></li>
-      <li><a href="shop.html?cat=textilien">Textilien</a></li>
-      <li><a href="shop.html?cat=moebel">Möbel</a></li>
+      <li>
+        <a href="shop.html">Shop ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="shop.html?cat=deko">Deko</a></li>
+          <li><a href="shop.html?cat=textilien">Textilien</a></li>
+          <li><a href="shop.html?cat=moebel">Möbel</a></li>
+        </ul>
+      </li>
       <li><a href="inspiration.html">Inspiration</a></li>
       <li><a href="sale.html"><b><span style="color:#d9534f;">Sale %</span></b></a></li>
     </ul>
@@ -51,8 +103,49 @@
   <div class="shop-grid" id="sale-grid"></div>
 </div>
 
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5 style="font-family:var(--display); font-size:1.4rem; color:white;">Little Nest</h5>
+        <p style="opacity:0.5; margin-top:10px;">Nachhaltige und ästhetische Wohnaccessoires.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html?cat=deko">Dekoartikel</a></li>
+          <li><a href="shop.html?cat=textilien">Textilien</a></li>
+          <li><a href="shop.html?cat=moebel">Möbel</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Inspiration</h5>
+        <ul>
+          <li><a href="inspiration.html">Wohnwelten</a></li>
+          <li><a href="sale.html">Angebote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <ul>
+          <li>info@littlenest.de</li>
+          <li>Zentraler Support</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div>&copy; 2026 Little Nest. Alle Rechte vorbehalten.</div>
+      <ul class="footer-legal-links">
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
 <script>
-// Filtert direkt alle Artikel heraus, die "Sale" deklariert haben
+// IDs matchen mit den IDs in produkt.html
 const products = [
   { id:4, name:'Keramik-Schale Tokyo', category:'deko', price:19.50, priceOld:29.00, badge:'Sale', img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500' },
   { id:7, name:'Tischläufer Rustika', category:'textilien', price:12.90, priceOld:19.90, badge:'Sale', img:'https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=500' },
@@ -61,12 +154,12 @@ const products = [
 
 const grid = document.getElementById('sale-grid');
 grid.innerHTML = products.map(p => `
-  <div class="product-card">
+  <div class="product-card" onclick="window.location.href='produkt.html?id=${p.id}'">
     <span class="badge">SALE</span>
     <img src="${p.img}" alt="${p.name}">
     <div class="p-body">
       <div class="p-name">${p.name}</div>
-      <div class="p-price">€ ${p.price.toFixed(2)} <span class="old-price">€ ${p.priceOld.toFixed(2)}</span></div>
+      <div class="p-price">€ ${p.price.toFixed(2).replace('.', ',')} <span class="old-price">€ ${p.priceOld.toFixed(2).replace('.', ',')}</span></div>
     </div>
   </div>
 `).join('');
